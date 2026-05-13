@@ -112,24 +112,56 @@ section { padding: 82px 0; }
 
 .service-icon {
   width: 100%;
-  height: 132px;
+  height: 140px;
   display: grid;
   place-items: center;
   margin-bottom: 22px;
   border: 1px solid rgba(0, 150, 220, 0.18);
   border-radius: 8px;
+  position: relative;
+  overflow: hidden;
   background:
-    linear-gradient(135deg, rgba(255,255,255,.92), rgba(230,245,251,.88)),
+    linear-gradient(135deg, rgba(255,255,255,.97), rgba(230,245,251,.9)),
     radial-gradient(circle at 78% 24%, rgba(0,150,220,.16), transparent 34%),
+    linear-gradient(115deg, transparent 0 36%, rgba(255,255,255,.78) 37% 42%, transparent 43%),
     #fff;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.75), 0 18px 40px rgba(0, 70, 120, 0.11);
 }
 
-.service-icon img {
+.service-icon::before {
+  content: "";
+  position: absolute;
+  inset: 17px 26px;
+  border: 1px solid rgba(0,150,220,.16);
+  border-radius: 28px;
+  background: rgba(255,255,255,.34);
+}
+
+.service-icon svg {
+  position: relative;
+  z-index: 1;
   width: 88px;
   height: 88px;
-  object-fit: contain;
+  fill: none;
+  stroke: var(--navy);
+  stroke-width: 3.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
   filter: drop-shadow(0 12px 18px rgba(0,70,120,.16));
+}
+
+.service-icon .icon-accent {
+  stroke: var(--blue);
+}
+
+.service-icon .icon-fill {
+  fill: rgba(0,150,220,.08);
+  stroke: none;
+}
+
+.service-icon .icon-dot {
+  fill: var(--blue);
+  stroke: none;
 }
 
 .service-icon-card ul {
