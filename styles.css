@@ -58,6 +58,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .button-light { border-color: var(--line); background: #fff; color: var(--ink); }
 
 .hero, .page-hero { position: relative; color: #fff; isolation: isolate; overflow: hidden; }
+.hero-home { --hero-image: url("assets/hero-structure.jpg"); }
+.hero-services { --hero-image: url("assets/services-hero.png"); }
+.hero-projects { --hero-image: url("assets/project-church.png"); }
 .hero { min-height: 760px; display: flex; align-items: stretch; }
 .page-hero { padding: 112px 0 86px; }
 .hero::before, .page-hero::before {
