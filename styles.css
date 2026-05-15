@@ -25,7 +25,7 @@ body {
 a { color: inherit; text-decoration: none; }
 img { display: block; width: 100%; height: 100%; object-fit: cover; }
 h1, h2, h3, p { margin-top: 0; }
-h1 { max-width: 920px; margin-bottom: 22px; font-size: clamp(2.55rem, 6vw, 5.1rem); line-height: .96; letter-spacing: 0; }
+h1 { max-width: 920px; margin-bottom: 22px; font-size: clamp(2.55rem, 6vw, 5.1rem); line-height: 1.02; letter-spacing: 0; }
 h2 { margin-bottom: 16px; font-size: clamp(2rem, 4vw, 3.15rem); line-height: 1.03; letter-spacing: 0; }
 h3 { margin-bottom: 10px; font-size: 1.2rem; }
 h1, h2, h3 { text-wrap: balance; }
@@ -324,7 +324,7 @@ footer { padding: 34px 0; background: #071d2c; color: rgba(255,255,255,.76); }
   .brand-mark { width: 48px; height: 48px; }
   .brand-mark img { width: 39px; height: 39px; }
   .brand small, .nav .button { display: none; }
-  h1 { font-size: clamp(2.3rem, 15vw, 3.8rem); line-height: 1; }
+  h1 { font-size: clamp(2.3rem, 15vw, 3.8rem); line-height: 1.04; }
   h2 { font-size: clamp(1.9rem, 11vw, 2.65rem); line-height: 1.05; }
   section { padding: 58px 0; }
   .proof-strip, .grid-3, .process-grid { grid-template-columns: 1fr; }
