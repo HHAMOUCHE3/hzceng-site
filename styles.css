@@ -97,6 +97,33 @@ form { display: grid; gap: 12px; }
 input, select, textarea { width: 100%; min-height: 46px; border: 1px solid #c7dce8; border-radius: 6px; padding: 11px 12px; color: var(--ink); background: #fff; font: inherit; }
 textarea { min-height: 110px; resize: vertical; }
 .form-note { margin: 0; color: var(--muted); font-size: .82rem; }
+.form-context {
+  display: none;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(0,150,220,.22);
+  border-radius: 6px;
+  background: var(--soft);
+  color: var(--navy);
+  font-size: .88rem;
+  font-weight: 800;
+}
+.form-context:not(:empty) { display: block; }
+.form-status {
+  min-height: 22px;
+  margin: 0;
+  color: var(--muted);
+  font-size: .88rem;
+  font-weight: 750;
+}
+.form-status[data-state="success"] { color: #087a4b; }
+.form-status[data-state="error"] { color: #b42318; }
+.form-status[data-state="sending"] { color: var(--blue-dark); }
+button:disabled {
+  cursor: wait;
+  opacity: .68;
+  transform: none;
+}
 
 section { padding: 82px 0; }
 .section-soft { background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(243,249,252,.98)), var(--soft); }
