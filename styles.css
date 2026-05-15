@@ -357,3 +357,10 @@ footer { padding: 34px 0; background: #071d2c; color: rgba(255,255,255,.76); }
   .proof-strip div { min-height: auto; }
   .case-body { padding: 18px; }
 }
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

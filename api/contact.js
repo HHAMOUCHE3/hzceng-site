@@ -1,4 +1,20 @@
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MAX_BODY_BYTES = 20_000;
+const MAX_REQUESTS_PER_WINDOW = 5;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const rateLimitStore = new Map();
+const FIELD_LIMITS = {
+  name: 120,
+  email: 254,
+  service: 120,
+  source: 120,
+  message: 2_000,
+  projectLocation: 240,
+  phone: 40,
+  clientType: 80,
+  timeline: 80,
+  context: 160,
+};
 
 function json(res, status, body) {
   res.statusCode = status;
@@ -29,6 +45,27 @@ function textField(label, value) {
   return safeValue ? `${label}: ${safeValue}\n` : "";
 }
 
+function getClientIp(req) {
+  const forwardedFor = clean(req.headers["x-forwarded-for"]);
+  return forwardedFor ? forwardedFor.split(",")[0].trim() : clean(req.socket?.remoteAddress) || "unknown";
+}
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const recent = (rateLimitStore.get(ip) || []).filter((timestamp) => now - timestamp < RATE_LIMIT_WINDOW_MS);
+  if (recent.length >= MAX_REQUESTS_PER_WINDOW) {
+    rateLimitStore.set(ip, recent);
+    return true;
+  }
+  recent.push(now);
+  rateLimitStore.set(ip, recent);
+  return false;
+}
+
+function exceedsLimit(value, limit) {
+  return clean(value).length > limit;
+}
+
 module.exports = async function handler(req, res) {
   if (req.method === "OPTIONS") {
     res.setHeader("Allow", "POST, OPTIONS");
@@ -38,6 +75,17 @@ module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST, OPTIONS");
     return json(res, 405, { ok: false, error: "Method not allowed." });
+  }
+
+  const contentLength = Number(req.headers["content-length"] || 0);
+  if (contentLength > MAX_BODY_BYTES) {
+    return json(res, 413, { ok: false, error: "Inquiry is too large. Please shorten the message and try again." });
+  }
+
+  const clientIp = getClientIp(req);
+  if (isRateLimited(clientIp)) {
+    res.setHeader("Retry-After", Math.ceil(RATE_LIMIT_WINDOW_MS / 1000));
+    return json(res, 429, { ok: false, error: "Too many inquiries were sent. Please wait a few minutes and try again." });
   }
 
   let body = {};
@@ -60,13 +108,29 @@ module.exports = async function handler(req, res) {
   const clientType = clean(body.clientType);
   const timeline = clean(body.timeline);
   const context = clean(body.context);
+  const website = clean(body.website);
   const serviceOrContext = service || context || source;
 
+  if (website) return json(res, 200, { ok: true, message: "Thank you. H&Z will follow up with you shortly." });
   if (!name) return json(res, 400, { ok: false, error: "Please enter your name." });
   if (!EMAIL_RE.test(email)) return json(res, 400, { ok: false, error: "Please enter a valid email address." });
   if (!serviceOrContext) return json(res, 400, { ok: false, error: "Please choose a service or inquiry type." });
   if (!projectLocation && !message) {
     return json(res, 400, { ok: false, error: "Please include a project location or a brief message." });
+  }
+  if (
+    exceedsLimit(name, FIELD_LIMITS.name) ||
+    exceedsLimit(email, FIELD_LIMITS.email) ||
+    exceedsLimit(service, FIELD_LIMITS.service) ||
+    exceedsLimit(source, FIELD_LIMITS.source) ||
+    exceedsLimit(message, FIELD_LIMITS.message) ||
+    exceedsLimit(projectLocation, FIELD_LIMITS.projectLocation) ||
+    exceedsLimit(phone, FIELD_LIMITS.phone) ||
+    exceedsLimit(clientType, FIELD_LIMITS.clientType) ||
+    exceedsLimit(timeline, FIELD_LIMITS.timeline) ||
+    exceedsLimit(context, FIELD_LIMITS.context)
+  ) {
+    return json(res, 400, { ok: false, error: "One or more fields are too long. Please shorten the inquiry and try again." });
   }
 
   if (!process.env.RESEND_API_KEY) {
