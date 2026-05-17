@@ -50,11 +50,5 @@
       "destination": "/contact",
       "permanent": true
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/homepage.html"
-    }
   ]
 }
