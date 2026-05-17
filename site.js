@@ -58,6 +58,10 @@ function setStatus(form, message, type) {
   status.dataset.state = type || "";
 }
 
+function trackEvent(name, params = {}) {
+  if (typeof window.gtag === "function") window.gtag("event", name, params);
+}
+
 async function submitContactForm(form) {
   const submit = form.querySelector("button[type='submit']");
   const payload = collectForm(form);
@@ -84,6 +88,7 @@ async function submitContactForm(form) {
     form.reset();
     applyContactParams();
     setStatus(form, result.message || "Thank you. H&Z will follow up with you shortly.", "success");
+    trackEvent("generate_lead", { form_location: payload.source || "website_form", service: payload.service || "" });
   } catch (error) {
     setStatus(form, error.message || "Unable to send right now. Please call or email H&Z directly.", "error");
   } finally {
@@ -114,6 +119,12 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
       submitContactForm(form);
     });
+  });
+  document.querySelectorAll("a[href^='tel:']").forEach((link) => {
+    link.addEventListener("click", () => trackEvent("phone_click", { link_location: link.closest("header") ? "header" : "page" }));
+  });
+  document.querySelectorAll("a[href^='mailto:']").forEach((link) => {
+    link.addEventListener("click", () => trackEvent("email_click", { link_location: link.closest("header") ? "header" : "page" }));
   });
   applyContactParams();
 });
