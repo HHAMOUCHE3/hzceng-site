@@ -232,6 +232,14 @@ section { padding: 82px 0; }
 }
 .tag { display: inline-flex; align-items: center; min-height: 28px; margin-bottom: 18px; padding: 0 10px; border-radius: 999px; background: var(--soft); color: var(--navy); font-size: .78rem; font-weight: 850; }
 .text-link { display: inline-flex; margin-top: 8px; color: var(--blue-dark); font-weight: 850; }
+.inline-link {
+  color: var(--blue-dark);
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 109, 166, .34);
+  text-underline-offset: 3px;
+}
+.inline-link:hover { text-decoration-color: currentColor; }
 .image-card {
   height: 280px;
   padding: 14px;
