@@ -108,8 +108,8 @@ function applyContactParams() {
     input.value = context;
   });
   document.querySelectorAll("[data-form-context]").forEach((node) => {
-    if (!context && !service) return;
-    node.textContent = service ? `Inquiry type: ${service}` : `Inquiry source: ${context}`;
+    if (!service) return;
+    node.textContent = `Inquiry type: ${service}`;
   });
 }
 
