@@ -360,7 +360,7 @@ footer { padding: 34px 0; background: #071d2c; color: rgba(255,255,255,.76); }
   h2 { font-size: clamp(1.9rem, 11vw, 2.65rem); line-height: 1.05; }
   section { padding: 58px 0; }
   .proof-strip, .grid-3, .process-grid { grid-template-columns: 1fr; }
-  .hero-inner { padding: 38px 0 42px; }
+  .hero-inner { padding: 16px 0 34px; }
   .page-hero { padding: 58px 0 48px; }
   .hero-copy, .page-hero p { font-size: 1rem; }
   .actions, .cta-band .actions { width: 100%; }
