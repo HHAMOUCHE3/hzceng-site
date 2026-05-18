@@ -273,6 +273,92 @@ section { padding: 82px 0; }
   border-radius: 6px;
   background: #fff;
 }
+.instagram-section {
+  position: relative;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(191,238,255,.14), transparent 24%),
+    linear-gradient(135deg, rgba(0,50,86,.98), rgba(7,38,60,.99));
+  color: #fff;
+}
+.instagram-section::before {
+  content: "";
+  position: absolute;
+  inset: 22px;
+  border: 1px solid rgba(191,238,255,.12);
+  pointer-events: none;
+}
+.instagram-section p {
+  color: rgba(255,255,255,.82);
+}
+.instagram-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, .8fr) minmax(0, 1.2fr);
+  gap: 42px;
+  align-items: center;
+}
+.instagram-copy {
+  position: relative;
+  z-index: 1;
+}
+.instagram-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  color: #fff;
+  font-size: .82rem;
+  font-weight: 850;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.instagram-mark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(191,238,255,.28);
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+  box-shadow: 0 12px 24px rgba(0,0,0,.18);
+}
+.instagram-mark svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.8;
+}
+.instagram-mark .icon-dot {
+  fill: #fff;
+  stroke: none;
+}
+.instagram-section h2 {
+  max-width: 620px;
+  margin-bottom: 18px;
+}
+.instagram-section .actions {
+  margin-top: 24px;
+}
+.instagram-gallery {
+  min-height: 420px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(180px, .75fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.instagram-shot {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(191,238,255,.2);
+  border-radius: var(--radius);
+  box-shadow: 0 22px 54px rgba(0,0,0,.28);
+}
+.instagram-shot-main {
+  grid-row: 1 / span 2;
+}
+.instagram-shot img {
+  object-fit: cover;
+}
 .check-list { display: grid; gap: 14px; margin: 26px 0 0; padding: 0; list-style: none; }
 .check-list li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; }
 .check-list span { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--soft); color: var(--blue-dark); font-weight: 900; }
@@ -340,6 +426,7 @@ footer { padding: 34px 0; background: #071d2c; color: rgba(255,255,255,.76); }
   }
   .hero { min-height: auto; }
   .hero-inner, .grid-2, .contact-layout { grid-template-columns: 1fr; }
+  .instagram-grid { grid-template-columns: 1fr; }
   .detail-grid, .case-study { grid-template-columns: 1fr; }
   .hero-inner { padding: 44px 0 46px; }
   .proof-strip, .grid-3, .process-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
@@ -372,6 +459,19 @@ footer { padding: 34px 0; background: #071d2c; color: rgba(255,255,255,.76); }
   .service-icon svg { width: 76px; height: 76px; }
   .image-card { height: 230px; padding: 10px; }
   .feature-image { min-height: 300px; }
+  .instagram-gallery {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .instagram-section::before {
+    inset: 14px;
+  }
+  .instagram-shot,
+  .instagram-shot-main {
+    grid-row: auto;
+    min-height: 220px;
+  }
   .contact-list a, .contact-list div {
     align-items: start;
     flex-direction: column;
